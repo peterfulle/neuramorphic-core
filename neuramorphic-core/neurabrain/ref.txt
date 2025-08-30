@@ -1,0 +1,1 @@
+/home/ubuntu/arquitecture-main/neuramorphic-core/Neurabrain-Model/start.sh

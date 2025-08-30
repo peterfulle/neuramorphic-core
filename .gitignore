@@ -1,0 +1,129 @@
+# Neuromorphic Medical AI - .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyTorch
+*.pth
+*.pt
+
+# Medical Images (large files)
+*.nii
+*.nii.gz
+*.dcm
+*.dicom
+
+# Analysis Results
+medical_analysis_*/
+analysis_results_*/
+reportes_pdf_finales/
+*.pdf
+*.png
+*.jpg
+*.jpeg
+
+# Logs
+*.log
+logs/
+
+# Models (large files)
+models/*.pth
+models/*.pt
+models/*.bin
+models/*.safetensors
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environment variables
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# GPU/CUDA
+*.cuda
+*.gpu
+
+# Scientific Data
+*.mat
+*.h5
+*.hdf5
+*.npz
+
+# Documentation
+docs/_build/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Training checkpoints
+checkpoints/
+saved_models/
+
+# Data directories (keep structure, ignore content)
+data/*/
+datasets/*/
+
+# Configuration files with sensitive data
+config_local.py
+secrets.yaml
+
+# Cache
+.cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Validation reports
+validation_*/
+scientific_validation_*/
