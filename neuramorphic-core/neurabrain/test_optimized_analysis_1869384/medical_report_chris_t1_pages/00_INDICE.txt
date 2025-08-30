@@ -1,0 +1,12 @@
+📄 ÍNDICE DE PÁGINAS DEL REPORTE MÉDICO
+========================================
+
+01_portada_resumen.png       - Información del estudio y resumen ejecutivo
+02_analisis_anatomico.png    - Análisis anatómico estructural con imágenes
+03_hallazgos_patologicos.png - Hallazgos patológicos específicos ordenados
+04_analisis_cuantitativo.png - Métricas cuantitativas y ratios anatómicos
+05_recomendaciones.png       - Recomendaciones clínicas y seguimiento
+
+Para convertir a PDF:
+- Linux/Mac: convert *.png reporte_medico.pdf
+- Windows: Usar herramienta de conversión PNG a PDF

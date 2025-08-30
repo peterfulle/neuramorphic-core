@@ -66,6 +66,20 @@ def main():
         help='Automatically scan current directory for .nii.gz files'
     )
     
+    parser.add_argument(
+        '--enhanced-mode',
+        action='store_true',
+        help='Enable enhanced slice-by-slice analysis'
+    )
+    
+    parser.add_argument(
+        '--slice-axis',
+        type=int,
+        choices=[0, 1, 2],
+        default=2,
+        help='Axis for slice extraction (0=sagittal, 1=coronal, 2=axial)'
+    )
+    
     args = parser.parse_args()
     
     if not setup_environment():
@@ -114,18 +128,61 @@ def main():
     print(f"Images to analyze: {len(image_files)}")
     print(f"Output directory: {args.output_dir}")
     print(f"Log level: {args.log_level}")
+    print(f"Enhanced mode: {'ENABLED' if args.enhanced_mode else 'DISABLED'}")
+    if args.enhanced_mode:
+        axis_names = {0: 'Sagittal', 1: 'Coronal', 2: 'Axial'}
+        print(f"Slice axis: {args.slice_axis} ({axis_names[args.slice_axis]})")
     print("=" * 50)
     
     try:
         if len(image_files) == 1:
-            result = analysis_engine.analyze_single_image(str(image_files[0]))
-            print(f"\nSingle image analysis completed")
-            print(f"Report: {result['report_path']}")
-            print(f"Visualization: {result['visualization_path']}")
+            if args.enhanced_mode:
+                print("🧠 Running ENHANCED slice-by-slice analysis...")
+                result = analysis_engine.analyze_single_image_enhanced(
+                    str(image_files[0]),
+                    enable_slice_analysis=True,
+                    slice_axis=args.slice_axis
+                )
+                print(f"\n✅ Enhanced analysis completed")
+                print(f"📄 Enhanced report: {result['enhanced_report_path']}")
+                print(f"📊 Standard report: {result['standard_analysis']['report_path']}")
+                print(f"🖼️  Visualization: {result['standard_analysis']['visualization_path']}")
+                
+                # Print slice-by-slice summary
+                enhanced_features = result.get('enhanced_features', {})
+                if enhanced_features:
+                    total_slices = enhanced_features.get('total_slices_analyzed', 0)
+                    video_path = enhanced_features.get('video_generated')
+                    print(f"🎬 Total slices processed: {total_slices}")
+                    if video_path:
+                        print(f"🎥 Video generated: {Path(video_path).name}")
+                
+            else:
+                print("🔄 Running standard analysis...")
+                result = analysis_engine.analyze_single_image(str(image_files[0]))
+                print(f"\n✅ Single image analysis completed")
+                print(f"📄 Report: {result['report_path']}")
+                print(f"🖼️  Visualization: {result['visualization_path']}")
         else:
-            results = analysis_engine.analyze_multiple_images([str(f) for f in image_files])
-            print(f"\nBatch analysis completed")
-            print(f"Successfully processed: {len(results)}/{len(image_files)} images")
+            if args.enhanced_mode:
+                print("🧠 Running ENHANCED batch analysis...")
+                results = []
+                for i, image_file in enumerate(image_files, 1):
+                    print(f"\n🔬 Processing {i}/{len(image_files)}: {image_file.name}")
+                    result = analysis_engine.analyze_single_image_enhanced(
+                        str(image_file),
+                        enable_slice_analysis=True,
+                        slice_axis=args.slice_axis
+                    )
+                    results.append(result)
+                
+                print(f"\n✅ Enhanced batch analysis completed")
+                print(f"🎬 Successfully processed: {len(results)}/{len(image_files)} images with slice-by-slice analysis")
+            else:
+                print("🔄 Running standard batch analysis...")
+                results = analysis_engine.analyze_multiple_images([str(f) for f in image_files])
+                print(f"\n✅ Batch analysis completed")
+                print(f"📊 Successfully processed: {len(results)}/{len(image_files)} images")
         
         summary = analysis_engine.get_analysis_summary()
         print(f"\nAnalysis Summary:")

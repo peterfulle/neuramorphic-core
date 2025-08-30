@@ -1,0 +1,2 @@
+clean
+cd /home/ubuntu/arquitecture-main/neuramorphic-core/neurabrain && chmod +x clean.sh && ./clean.sh

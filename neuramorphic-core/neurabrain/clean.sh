@@ -47,6 +47,27 @@ if ls temp_* 1> /dev/null 2>&1; then
     ITEMS_CLEANED=$((ITEMS_CLEANED + 1))
 fi
 
+# NUEVO: Limpiar directorios de pruebas optimizadas
+if ls test_optimized_analysis_* 1> /dev/null 2>&1; then
+    echo "Removing optimized test analysis directories..."
+    rm -rf test_optimized_analysis_*
+    ITEMS_CLEANED=$((ITEMS_CLEANED + 1))
+fi
+
+# NUEVO: Limpiar directorios de análisis médico
+if ls medical_analysis_* 1> /dev/null 2>&1; then
+    echo "Removing medical analysis directories..."
+    rm -rf medical_analysis_*
+    ITEMS_CLEANED=$((ITEMS_CLEANED + 1))
+fi
+
+# NUEVO: Limpiar directorios de análisis enhanced
+if ls enhanced_analysis_* 1> /dev/null 2>&1; then
+    echo "Removing enhanced analysis directories..."
+    rm -rf enhanced_analysis_*
+    ITEMS_CLEANED=$((ITEMS_CLEANED + 1))
+fi
+
 if [ -d "__pycache__" ]; then
     echo "Removing Python cache..."
     rm -rf __pycache__
